@@ -68,7 +68,7 @@ function renderTopbar($title, $depth = 0)
         <div class="branding-container">
             <img src="<?= $base ?>assets/img/icon_hijab.png" alt="Logo" class="branding-logo">
             <div class="branding-text">
-                <h3 class="branding-title">Sistem Pencatatan Pelanggaran Santriwati</h3>
+                <h3 class="branding-title">Sistem Pencatatan Pelanggaran</h3>
                 <p class="branding-subtitle">Bagian Disiplin Pengasuhan Santriwati</p>
             </div>
         </div>
