@@ -22,7 +22,7 @@ Sistem Informasi Manajemen Pelanggaran Santriwati berbasis Web, dibuat menggunak
 
 1. **Clone Repository**
    ```bash
-   git clone https://github.com/username/santri-violation-system.git
+   git clone https://github.com/rizkyyogoprayogi/SIPELSAN-v2
    cd santri-violation-system
    ```
 
