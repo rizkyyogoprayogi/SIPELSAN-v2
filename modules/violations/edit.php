@@ -201,7 +201,7 @@ $santri_json = json_encode($santri_list);
                         </div>
 
                         <div style="margin-top: 1.5rem; text-align: right;">
-                            <a href="index.php" class="btn"
+                            <a href="#" onclick="history.back(); return false;" class="btn"
                                 style="background:#E5E7EB; color:#374151; margin-right:0.5rem">Batal</a>
                             <button type="submit" class="btn btn-primary">Update Data</button>
                         </div>

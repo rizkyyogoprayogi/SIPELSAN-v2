@@ -188,8 +188,15 @@ foreach ($violations as $v) {
                                     <div><?= htmlspecialchars($santri['class']) ?></div>
                                 </div>
                                 <div class="info-item">
-                                    <label>Kamar Asrama</label>
-                                    <div><?= htmlspecialchars($santri['dorm_room']) ?></div>
+                                    <label>Asrama</label>
+                                    <div>
+                                        <?= htmlspecialchars($santri['dorm_room']) ?>
+                                        <?php if (!empty($santri['room_number'])): ?>
+                                            <span style="color: var(--text-muted); font-weight: normal; font-size: 0.9em;">
+                                                (Kamar: <?= htmlspecialchars($santri['room_number']) ?>)
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                                 <div class="info-item">
                                     <label>Total Poin Pelanggaran</label>
