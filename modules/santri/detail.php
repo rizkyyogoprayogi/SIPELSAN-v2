@@ -276,8 +276,12 @@ foreach ($violations as $v) {
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                         <h3 style="font-size: 1.1rem; margin: 0;">Riwayat Pelanggaran</h3>
-                        <a href="export_violations.php?id=<?= $santri['id'] ?>" class="btn btn-primary"
-                            style="background-color: var(--secondary); font-size: 0.875rem;">⬇ CSV</a>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <a href="export_violations.php?id=<?= $santri['id'] ?>" class="btn btn-primary"
+                                style="background-color: var(--secondary); font-size: 0.875rem;">⬇ CSV</a>
+                            <a href="export_violations_excel.php?id=<?= $santri['id'] ?>" class="btn btn-primary"
+                                style="background-color: #10B981; font-size: 0.875rem;">⬇ Excel</a>
+                        </div>
                     </div>
                     <?php if (count($violations) > 0): ?>
                         <div style="overflow-x: auto;">

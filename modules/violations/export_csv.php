@@ -24,8 +24,12 @@ $stmt->execute([$start_date, $end_date]);
 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Set Headers for Download
-header('Content-Type: text/csv');
+if (ob_get_level())
+    ob_end_clean(); // Clean any previous output
+header('Content-Type: text/csv; charset=utf-8');
 header('Content-Disposition: attachment; filename="Laporan_Pelanggaran_' . $start_date . '_to_' . $end_date . '.csv"');
+header('Pragma: no-cache');
+header('Expires: 0');
 
 // Open Output Stream
 $output = fopen('php://output', 'w');

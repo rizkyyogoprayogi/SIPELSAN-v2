@@ -160,7 +160,7 @@ if ($role === 'guru') {
 
                 <!-- Export Section -->
                 <div class="card" style="margin-bottom: 2rem;">
-                    <h3 style="margin-bottom: 1rem; font-size: 1rem;">Export Data Laporan (CSV)</h3>
+                    <h3 style="margin-bottom: 1rem; font-size: 1rem;">Export Data Laporan</h3>
                     <form action="modules/violations/export_csv.php" method="GET"
                         style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
                         <div class="form-group" style="margin-bottom: 0;">
@@ -175,6 +175,8 @@ if ($role === 'guru') {
                         </div>
                         <button type="submit" class="btn btn-primary" style="background-color: var(--secondary);">⬇
                             Download CSV</button>
+                        <button type="submit" formaction="modules/violations/export_excel.php" class="btn btn-primary"
+                            style="background-color: #10B981;">⬇ Download Excel</button>
                     </form>
                 </div>
 
