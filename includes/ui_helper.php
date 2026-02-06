@@ -17,7 +17,7 @@ function renderSidebar($activePage, $depth = 0)
             <a href="<?= $base ?>modules/santri/index.php"
                 class="nav-link <?= $activePage === 'santri' ? 'active' : '' ?>">Data Santriwati</a>
             <a href="<?= $base ?>modules/violations/index.php"
-                class="nav-link <?= $activePage === 'violations' ? 'active' : '' ?>">Pelanggaran</a>
+                class="nav-link <?= $activePage === 'violations' ? 'active' : '' ?>">Data Pelanggaran</a>
 
             <?php if ($role === 'admin'): ?>
                 <div
@@ -65,13 +65,13 @@ function renderTopbar($title, $depth = 0)
         <?php
         // Always render branding header
         ?>
-        <div class="branding-container">
-            <img src="<?= $base ?>assets/img/icon_hijab.png" alt="Logo" class="branding-logo">
+        <a href="<?= $base ?>dashboard.php" class="branding-container" style="text-decoration: none; color: inherit;">
+            <img src="<?= $base ?>assets/img/logo_sekolah_dhputri.png" alt="Logo" class="branding-logo">
             <div class="branding-text">
                 <h3 class="branding-title">Sistem Pencatatan Pelanggaran</h3>
                 <p class="branding-subtitle">Bagian Disiplin Pengasuhan Santriwati</p>
             </div>
-        </div>
+        </a>
 
         <div class="user-dropdown-group">
             <div class="user-trigger" onclick="toggleUserDropdown(event)">

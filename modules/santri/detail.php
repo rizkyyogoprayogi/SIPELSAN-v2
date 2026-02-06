@@ -266,7 +266,7 @@ foreach ($violations as $v) {
                                                     $cls = 'badge-medium';
                                                 if ($v['severity'] == 'heavy')
                                                     $cls = 'badge-heavy';
-                                                $label = ['light' => 'Ringan', 'medium' => 'Sedang', 'heavy' => 'Berat'][$v['severity']];
+                                                $label = ['light' => 'C1-Ringan', 'medium' => 'C2-Sedang', 'heavy' => 'C3-Berat'][$v['severity']];
                                                 ?>
                                                 <span class="badge <?= $cls ?>"><?= $label ?></span>
                                             </td>

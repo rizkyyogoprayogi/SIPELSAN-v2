@@ -86,6 +86,8 @@ if ($filter_class) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Santriwati - SIPELSAN</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .table {
             width: 100%;
@@ -244,9 +246,10 @@ if ($filter_class) {
                                                 <td style="white-space: nowrap;">
                                                     <a href="edit.php?id=<?= $santri['id'] ?>" class="btn"
                                                         style="font-size: 0.75rem; padding: 0.25rem 0.5rem; background: #E0E7FF; color: var(--primary); margin-right: 0.25rem;">Edit</a>
-                                                    <a href="delete.php?id=<?= $santri['id'] ?>" class="btn"
-                                                        style="font-size: 0.75rem; padding: 0.25rem 0.5rem; background: #FEE2E2; color: var(--danger);"
-                                                        onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                                                    <button
+                                                        onclick="confirmDeleteSantri('<?= $santri['id'] ?>', '<?= htmlspecialchars($santri['name'], ENT_QUOTES) ?>')"
+                                                        class="btn"
+                                                        style="font-size: 0.75rem; padding: 0.25rem 0.5rem; background: #FEE2E2; color: var(--danger); border: none; cursor: pointer;">Hapus</button>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -335,6 +338,24 @@ if ($filter_class) {
         </main>
     </div>
     <script src="../../assets/js/main.js"></script>
+    <script>
+        function confirmDeleteSantri(santriId, santriName) {
+            Swal.fire({
+                title: 'Hapus Santriwati?',
+                text: `Yakin ingin menghapus data "${santriName}"? Data yang dihapus tidak dapat dikembalikan.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#EF4444',
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `delete.php?id=${santriId}`;
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

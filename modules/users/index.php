@@ -21,6 +21,8 @@ $users = $stmt->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen User - SIPELSAN</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -69,11 +71,12 @@ $users = $stmt->fetchAll();
                                                 Edit
                                             </a>
                                             <?php if ($u['username'] !== 'admin'): ?>
-                                                <a href="delete.php?id=<?= $u['id'] ?>" class="btn"
-                                                    style="font-size: 0.75rem; padding: 0.25rem 0.5rem; background: #FEE2E2; color: var(--danger);"
-                                                    onclick="return confirm('Yakin ingin menghapus user ini?')">
+                                                <button
+                                                    onclick="confirmDeleteUser('<?= $u['id'] ?>', '<?= htmlspecialchars($u['full_name'], ENT_QUOTES) ?>')"
+                                                    class="btn"
+                                                    style="font-size: 0.75rem; padding: 0.25rem 0.5rem; background: #FEE2E2; color: var(--danger); border: none; cursor: pointer;">
                                                     Hapus
-                                                </a>
+                                                </button>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
@@ -86,6 +89,24 @@ $users = $stmt->fetchAll();
         </main>
     </div>
     <script src="../../assets/js/main.js"></script>
+    <script>
+        function confirmDeleteUser(userId, userName) {
+            Swal.fire({
+                title: 'Hapus User?',
+                text: `Yakin ingin menghapus user "${userName}"? Data yang dihapus tidak dapat dikembalikan.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#EF4444',
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `delete.php?id=${userId}`;
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

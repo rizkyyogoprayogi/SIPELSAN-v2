@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $level = $_POST['level'] ?? 'SMP';
     $class = trim($_POST['class']);
     $dorm_room = trim($_POST['dorm_room']);
+    $room_number = trim($_POST['room_number'] ?? '');
     $parent_name = trim($_POST['parent_name'] ?? '');
     $parent_phone = trim($_POST['parent_phone'] ?? '');
     $address = trim($_POST['address'] ?? '');
@@ -39,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $pdo->prepare("INSERT INTO classes (name) VALUES (?)")->execute([$class]);
             }
 
-            $insert = $pdo->prepare("INSERT INTO santriwati (nis, name, level, class, dorm_room, parent_name, parent_phone, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            if ($insert->execute([$nis, $name, $level, $class, $dorm_room, $parent_name, $parent_phone, $address])) {
+            $insert = $pdo->prepare("INSERT INTO santriwati (nis, name, level, class, dorm_room, room_number, parent_name, parent_phone, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            if ($insert->execute([$nis, $name, $level, $class, $dorm_room, $room_number, $parent_name, $parent_phone, $address])) {
                 $santri_id = $pdo->lastInsertId();
 
                 // Log activity
@@ -49,7 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'name' => $name,
                     'level' => $level,
                     'class' => $class,
-                    'dorm_room' => $dorm_room
+                    'dorm_room' => $dorm_room,
+                    'room_number' => $room_number
                 ]);
 
                 header('Location: index.php'); // Redirect to list
@@ -135,10 +137,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     ?>
                                 </select>
                             </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
                             <div class="form-group">
-                                <label for="dorm_room" class="form-label">Kamar Asrama</label>
+                                <label for="dorm_room" class="form-label">Asrama</label>
                                 <input type="text" id="dorm_room" name="dorm_room" class="form-control"
-                                    placeholder="Contoh: Siti Khadijah 1">
+                                    placeholder="Contoh: Siti Khadijah">
+                            </div>
+                            <div class="form-group">
+                                <label for="room_number" class="form-label">No. Kamar</label>
+                                <input type="text" id="room_number" name="room_number" class="form-control"
+                                    placeholder="Contoh: 12">
                             </div>
                         </div>
 

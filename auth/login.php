@@ -241,12 +241,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$blocked) {
 <body class="login-page">
     <div class="login-card">
         <!-- Cover Image -->
-        <img src="../assets/img/icon_sampul_sekolah.png" alt="Sampul Sekolah" class="login-cover">
+        <img src="../assets/img/sampul_dashboard_log_in_dhpi.png" alt="Sampul Sekolah" class="login-cover">
 
         <div class="login-body">
             <div class="login-header">
                 <!-- School Logo -->
-                <img src="../assets/img/icon_hijab.png" alt="Logo Sekolah" class="login-logo">
+                <img src="../assets/img/logo_sekolah_dhputri.png" alt="Logo Sekolah" class="login-logo">
                 <h1>SIPELSAN</h1>
                 <p>Sistem Pencatatan Pelanggaran Santriwati</p>
             </div>

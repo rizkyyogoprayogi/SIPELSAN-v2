@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $level = $_POST['level'] ?? 'SMP';
     $class = trim($_POST['class']);
     $dorm_room = trim($_POST['dorm_room']);
+    $room_number = trim($_POST['room_number'] ?? '');
     $parent_name = trim($_POST['parent_name'] ?? '');
     $parent_phone = trim($_POST['parent_phone'] ?? '');
     $address = trim($_POST['address'] ?? '');
@@ -52,21 +53,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $pdo->prepare("INSERT INTO classes (name) VALUES (?)")->execute([$class]);
             }
 
-            $update = $pdo->prepare("UPDATE santriwati SET nis=?, name=?, level=?, class=?, dorm_room=?, parent_name=?, parent_phone=?, address=? WHERE id=?");
-            if ($update->execute([$nis, $name, $level, $class, $dorm_room, $parent_name, $parent_phone, $address, $id])) {
+            $update = $pdo->prepare("UPDATE santriwati SET nis=?, name=?, level=?, class=?, dorm_room=?, room_number=?, parent_name=?, parent_phone=?, address=? WHERE id=?");
+            if ($update->execute([$nis, $name, $level, $class, $dorm_room, $room_number, $parent_name, $parent_phone, $address, $id])) {
                 // Log activity
                 log_activity($pdo, 'UPDATE', 'santriwati', $id, $name, [
                     'nis' => $santri['nis'],
                     'name' => $santri['name'],
                     'level' => $santri['level'],
                     'class' => $santri['class'],
-                    'dorm_room' => $santri['dorm_room']
+                    'dorm_room' => $santri['dorm_room'],
+                    'room_number' => $santri['room_number'] ?? null
                 ], [
                     'nis' => $nis,
                     'name' => $name,
                     'level' => $level,
                     'class' => $class,
-                    'dorm_room' => $dorm_room
+                    'dorm_room' => $dorm_room,
+                    'room_number' => $room_number
                 ]);
 
                 header('Location: detail.php?id=' . $id);
@@ -151,11 +154,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     }
                                     ?>
                                 </select>
+                                </select>
                             </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
                             <div class="form-group">
-                                <label for="dorm_room" class="form-label">Kamar Asrama</label>
+                                <label for="dorm_room" class="form-label">Asrama</label>
                                 <input type="text" id="dorm_room" name="dorm_room" class="form-control"
                                     value="<?= htmlspecialchars($santri['dorm_room']) ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="room_number" class="form-label">No. Kamar</label>
+                                <input type="text" id="room_number" name="room_number" class="form-control"
+                                    value="<?= htmlspecialchars($santri['room_number'] ?? '') ?>">
                             </div>
                         </div>
 

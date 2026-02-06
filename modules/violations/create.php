@@ -143,9 +143,9 @@ $santri_json = json_encode($santri_list);
                         <div class="form-group">
                             <label for="severity" class="form-label">Tingkat Pelanggaran</label>
                             <select id="severity" name="severity" class="form-control" required>
-                                <option value="light">Ringan (5 Poin)</option>
-                                <option value="medium">Sedang (15 Poin)</option>
-                                <option value="heavy">Berat (50 Poin)</option>
+                                <option value="light">C1-Ringan (5 Poin)</option>
+                                <option value="medium">C2-Sedang (15 Poin)</option>
+                                <option value="heavy">C3-Berat (50 Poin)</option>
                             </select>
                         </div>
                         <div class="form-group">

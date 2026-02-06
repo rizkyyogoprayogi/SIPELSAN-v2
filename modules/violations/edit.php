@@ -169,12 +169,12 @@ $santri_json = json_encode($santri_list);
                         <div class="form-group">
                             <label for="severity" class="form-label">Tingkat Pelanggaran</label>
                             <select id="severity" name="severity" class="form-control" required>
-                                <option value="light" <?= $violation['severity'] == 'light' ? 'selected' : '' ?>>Ringan (5
-                                    Poin)</option>
-                                <option value="medium" <?= $violation['severity'] == 'medium' ? 'selected' : '' ?>>Sedang
-                                    (15 Poin)</option>
-                                <option value="heavy" <?= $violation['severity'] == 'heavy' ? 'selected' : '' ?>>Berat (50
-                                    Poin)</option>
+                                <option value="light" <?= $violation['severity'] == 'light' ? 'selected' : '' ?>>C1-Ringan
+                                    (5 Poin)</option>
+                                <option value="medium" <?= $violation['severity'] == 'medium' ? 'selected' : '' ?>>
+                                    C2-Sedang (15 Poin)</option>
+                                <option value="heavy" <?= $violation['severity'] == 'heavy' ? 'selected' : '' ?>>C3-Berat
+                                    (50 Poin)</option>
                             </select>
                         </div>
 

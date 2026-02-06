@@ -107,6 +107,8 @@ $classes = $stmt->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Kelas - SIPELSAN</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .class-grid {
             display: grid;
