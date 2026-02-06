@@ -37,8 +37,18 @@ $violations = $stmt->fetchAll();
 
 // Calculate Total Points
 $total_points = 0;
+$count_light = 0;
+$count_medium = 0;
+$count_heavy = 0;
+
 foreach ($violations as $v) {
     $total_points += $v['points'];
+    if ($v['severity'] == 'light')
+        $count_light++;
+    if ($v['severity'] == 'medium')
+        $count_medium++;
+    if ($v['severity'] == 'heavy')
+        $count_heavy++;
 }
 ?>
 <!DOCTYPE html>
@@ -228,6 +238,36 @@ foreach ($violations as $v) {
                             <a href="edit.php?id=<?= $santri['id'] ?>" class="btn btn-primary"
                                 style="background: white; color: var(--primary); border: 1px solid var(--border-color);">Edit
                                 Profil</a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Summary Card -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.1rem; margin: 0 0 1.5rem 0;">Ringkasan Pelanggaran</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div
+                            style="background: #F3F4F6; padding: 1.5rem; border-radius: var(--radius-md); text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #374151;">
+                                <?= $count_light ?>
+                            </div>
+                            <div style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem;">C1 - Ringan</div>
+                        </div>
+                        <div
+                            style="background: #FFFBEB; padding: 1.5rem; border-radius: var(--radius-md); text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #D97706;">
+                                <?= $count_medium ?>
+                            </div>
+                            <div style="font-size: 0.875rem; color: #92400E; margin-top: 0.5rem;">C2 - Sedang</div>
+                        </div>
+                        <div
+                            style="background: #FEF2F2; padding: 1.5rem; border-radius: var(--radius-md); text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #DC2626;">
+                                <?= $count_heavy ?>
+                            </div>
+                            <div style="font-size: 0.875rem; color: #991B1B; margin-top: 0.5rem;">C3 - Berat</div>
                         </div>
                     </div>
                 </div>

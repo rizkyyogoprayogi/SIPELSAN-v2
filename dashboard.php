@@ -24,6 +24,21 @@ $total_santri = $stmt->fetchColumn();
 $stmt = $pdo->query("SELECT COUNT(*) FROM violations");
 $total_violations = $stmt->fetchColumn();
 
+// Calc Severity Counts with Filter
+$filter = $_GET['filter'] ?? 'all';
+$filter_sql = "";
+if ($filter === 'week') {
+    $filter_sql = "WHERE YEARWEEK(violation_date, 1) = YEARWEEK(CURDATE(), 1)";
+} elseif ($filter === 'month') {
+    $filter_sql = "WHERE MONTH(violation_date) = MONTH(CURDATE()) AND YEAR(violation_date) = YEAR(CURDATE())";
+}
+
+$stmt = $pdo->query("SELECT severity, COUNT(*) as count FROM violations $filter_sql GROUP BY severity");
+$sev_data = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+$light = $sev_data['light'] ?? 0;
+$medium = $sev_data['medium'] ?? 0;
+$heavy = $sev_data['heavy'] ?? 0;
+
 if ($role === 'guru') {
     // Maybe show how many violations this guru reported
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM violations WHERE reporter_id = ?");
@@ -52,13 +67,6 @@ if ($role === 'guru') {
             <?php renderTopbar('Dashboard', 0); ?>
 
             <div class="content-wrapper">
-                <div class="card" style="margin-bottom: 2rem;">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Selamat Datang di SIPELSAN
-                    </h3>
-                    <p style="color: var(--text-muted); line-height: 1.6;">
-                        Pastikan data yang diinputkan valid dan sesuai dengan kejadian di lapangan.
-                    </p>
-                </div>
                 <!-- Quick Actions Section -->
                 <div class="quick-actions-grid">
                     <!-- Card 1: Tambah Pelanggaran -->
@@ -115,6 +123,40 @@ if ($role === 'guru') {
                     <?php endif; ?>
                 </div>
 
+                <!-- Summary Card -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; margin: 0;">Ringkasan Pelanggaran</h3>
+                        <form id="filterForm" method="GET" style="margin: 0;">
+                            <select name="filter" onchange="document.getElementById('filterForm').submit()"
+                                class="form-control"
+                                style="font-size: 0.875rem; padding: 0.25rem 2rem 0.25rem 0.75rem; width: auto; display: inline-block;">
+                                <option value="all" <?= $filter === 'all' ? 'selected' : '' ?>>Semua Waktu</option>
+                                <option value="week" <?= $filter === 'week' ? 'selected' : '' ?>>Minggu Ini</option>
+                                <option value="month" <?= $filter === 'month' ? 'selected' : '' ?>>Bulan Ini</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div
+                            style="background: #F3F4F6; padding: 1.5rem; border-radius: var(--radius-md); text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #374151;"><?= $light ?></div>
+                            <div style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem;">C1 - Ringan</div>
+                        </div>
+                        <div
+                            style="background: #FFFBEB; padding: 1.5rem; border-radius: var(--radius-md); text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #D97706;"><?= $medium ?></div>
+                            <div style="font-size: 0.875rem; color: #92400E; margin-top: 0.5rem;">C2 - Sedang</div>
+                        </div>
+                        <div
+                            style="background: #FEF2F2; padding: 1.5rem; border-radius: var(--radius-md); text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #DC2626;"><?= $heavy ?></div>
+                            <div style="font-size: 0.875rem; color: #991B1B; margin-top: 0.5rem;">C3 - Berat</div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <!-- Export Section -->
                 <div class="card" style="margin-bottom: 2rem;">
@@ -123,8 +165,8 @@ if ($role === 'guru') {
                         style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
                         <div class="form-group" style="margin-bottom: 0;">
                             <label class="form-label">Dari Tanggal</label>
-                            <input type="date" name="start_date" class="form-control" value="<?= date('Y-m-01') ?>"
-                                required>
+                            <input type="date" name="start_date" class="form-control"
+                                value="<?= date('Y-m-01', strtotime('-3 months')) ?>" required>
                         </div>
                         <div class="form-group" style="margin-bottom: 0;">
                             <label class="form-label">Sampai Tanggal</label>
@@ -151,13 +193,9 @@ if ($role === 'guru') {
 
                 <?php
                 // Data for Charts
-                // 1. Severity
-                $stmt = $pdo->query("SELECT severity, COUNT(*) as count FROM violations GROUP BY severity");
-                $sev_data = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
-                $light = $sev_data['light'] ?? 0;
-                $medium = $sev_data['medium'] ?? 0;
-                $heavy = $sev_data['heavy'] ?? 0;
-
+                // Data for Charts
+                // 1. Severity (Calculated above)
+                
                 // 2. Class
                 $stmt = $pdo->query("SELECT s.class, COUNT(v.id) as count FROM violations v JOIN santriwati s ON v.santri_id = s.id GROUP BY s.class");
                 $class_data = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);

@@ -35,13 +35,19 @@ fputcsv($output, ['Tanggal & Waktu', 'Nama Santri', 'NIS', 'Kelas', 'Deskripsi P
 
 // Data Rows
 foreach ($data as $row) {
+    $severity_label = [
+        'light' => 'C1 - Ringan',
+        'medium' => 'C2 - Sedang',
+        'heavy' => 'C3 - Berat'
+    ][$row['severity']] ?? $row['severity'];
+
     fputcsv($output, [
         $row['violation_date'],
         $row['santri_name'],
         $row['nis'],
         $row['class'],
         $row['description'],
-        ucfirst($row['severity']),
+        $severity_label,
         $row['points'],
         $row['reporter']
     ]);
